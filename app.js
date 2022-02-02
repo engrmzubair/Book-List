@@ -7,13 +7,13 @@ function Book(title, author, isbn) {
 
 //UI Constructor
 function UI() { }
+
+//add book to list
 UI.prototype.addBookToList = function (book) {
   const list = document.getElementById('book-list')
 
   //create tr element
   const row = document.createElement('tr');
-  console.log(book);
-
   //insert cols
   row.innerHTML = `
   <td>${book.title}</td>
@@ -22,7 +22,6 @@ UI.prototype.addBookToList = function (book) {
   <td><a href="#"> <i class="fa fa-close"></i></a></td>
   `;
   list.appendChild(row);
-  console.log(row)
 }
 //show alert
 UI.prototype.showAlert = function (message, className) {
@@ -38,11 +37,9 @@ UI.prototype.showAlert = function (message, className) {
   col.insertBefore(div, form);
   //TimeOut After 3 second
   setTimeout(function () {
-    div .remove();
+    div.remove();
   }, 3000);
 }
-
-
 
 //clear fields
 UI.prototype.clearFields = function () {
@@ -51,9 +48,18 @@ UI.prototype.clearFields = function () {
   document.getElementById('isbn').value = '';
 }
 
+//delete book
+UI.prototype.deleteBook = function (target) {
+  if (target.className === 'fa fa-close' && confirm('Are You Sure?')) {
+    //instantiate UI
+    const ui = new UI();
+    target.parentElement.parentElement.parentElement.remove();
+    //show alert
+    ui.showAlert('Book Removed!', 'error');
+  }
+}
 
-
-//Event Listeners 
+//Event Listener for form submition
 document.getElementById('book-form').addEventListener('submit', e => {
 
   //get form values
@@ -68,7 +74,7 @@ document.getElementById('book-form').addEventListener('submit', e => {
   const ui = new UI();
 
   //validate
-  if (title === '' || author === '' || isbn === '') {
+  if (isbn === '' || title === '' || author === '') {
     ui.showAlert('Please fill in all fields', 'error');
   }
   else {
@@ -81,10 +87,19 @@ document.getElementById('book-form').addEventListener('submit', e => {
     //clear fields
     ui.clearFields();
   }
-
-
-
-
   e.preventDefault();
 });
 
+//Event Listener for delete book
+document.querySelector('#book-list').addEventListener('click', e => {
+
+  //instantiate UI
+  const ui = new UI();
+
+  //delete book from list
+  ui.deleteBook(e.target);
+
+
+  e.preventDefault();
+}
+);

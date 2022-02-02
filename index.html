@@ -16,6 +16,22 @@
 
 <title>Book List</title>
 <style>
+  .error,
+  .success {
+    color: white;
+    padding: 5px;
+    margin: 5px 0 15px 0;
+  }
+
+  .error {
+    background: #d50000;
+  }
+
+  .success {
+    background: #388e3c;
+
+  }
+
   #button {
     border: 1px solid lightgray;
     width: 100%;
@@ -33,7 +49,7 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-md-8 mx-auto">
+      <div class="col-md-8 mx-auto" id="col">
 
         <h1 class="mt-4">Add Book</h1>
 
@@ -41,6 +57,7 @@
           <div class="mb-3 mt-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" name="" id="title" class="form-control">
+
           </div>
           <div class="mb-3">
             <label for="author" class="form-label">Author</label>
